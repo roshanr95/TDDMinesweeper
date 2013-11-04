@@ -11,9 +11,27 @@
 @interface MinesweeperCell ()
 @property(nonatomic)MinesweeperCellState state;
 @property(nonatomic, getter = isClicked)BOOL clicked;
+@property(nonatomic)NSUInteger value;
+@property(nonatomic)NSUInteger row;
+@property(nonatomic)NSUInteger column;
 @end
 
+NSString *const MinesweeperCellDidUpdate = @"MCUpdate";
+NSString *const MinesweeperCellFlagDidAppear = @"MCFlagAppear";
+NSString *const MinesweeperCellFlagDidDisappear = @"MCFlagDisappear";
 @implementation MinesweeperCell
+
+- (instancetype)initWithRow:(NSUInteger)row column:(NSUInteger)column
+{
+    self = [super init];
+    
+    if (self) {
+        self.row = row;
+        self.column = column;
+    }
+    
+    return self;
+}
 
 - (NSString *)description
 {
@@ -34,6 +52,7 @@
 
 - (void)click
 {
+    self.state = MinesweeperCellStateDefault;
     self.clicked = YES;
 }
 
@@ -50,9 +69,32 @@
             self.state = MinesweeperCellStateDefault;
             break;
         default:
-            [NSException raise:@"Invalid State" format:@"%u is not a valid state", self.state];
+            [NSException raise:@"InvalidState" format:@"%u is not a valid state", self.state];
     }
-    
+}
+
+- (void)setState:(MinesweeperCellState)state
+{
+    if (!self.isClicked) {
+        if (_state != state) {
+            if (_state == MinesweeperCellStateFlag) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellFlagDidDisappear object:self];
+            }
+            _state = state;
+            [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellDidUpdate object:self];
+            if (_state == MinesweeperCellStateFlag) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellFlagDidAppear object:self];
+            }
+        }
+    }
+}
+
+- (void)setClicked:(BOOL)clicked
+{
+    if (_clicked != clicked) {
+        _clicked = clicked;
+            [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellDidUpdate object:self];
+    }
 }
 
 @end

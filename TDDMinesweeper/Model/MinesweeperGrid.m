@@ -17,7 +17,7 @@
 
 @implementation MinesweeperGrid
 
-- (id)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
+- (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
 {
     self = [super init];
     

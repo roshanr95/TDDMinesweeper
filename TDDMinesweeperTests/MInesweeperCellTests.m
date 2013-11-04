@@ -11,36 +11,44 @@
 #import "MinesweeperCell.h"
 
 @interface MinesweeperCellTests : XCTestCase
-@property (nonatomic, strong) MinesweeperCell *testCell;
+@property(nonatomic, strong) MinesweeperCell *testCell;
+@property(nonatomic)NSUInteger row;
+@property(nonatomic)NSUInteger column;
+
+@property(nonatomic)BOOL update;
+@property(nonatomic)BOOL flagAppear;
+@property(nonatomic)BOOL flagDisappear;
+@end
+
+@interface MinesweeperCell (Testing)
+- (void)setState:(MinesweeperCellState)state;
+- (void)setValue:(NSUInteger)value;
 @end
 
 @implementation MinesweeperCellTests
 
-- (MinesweeperCellState)nextState:(MinesweeperCellState)state
-{
-    switch (state) {
-        case MinesweeperCellStateDefault:
-            return MinesweeperCellStateFlag;
-        case MinesweeperCellStateFlag:
-            return MinesweeperCellStateQuestionMark;
-        case MinesweeperCellStateQuestionMark:
-            return MinesweeperCellStateDefault;
-        default:
-            [NSException raise:@"Invalid State" format:@"%u is not a valid state", state];
-    }
-}
-
 - (void)setUp
 {
     [super setUp];
+    self.row = arc4random() % 20;
+    self.column = arc4random() % 20;
+    self.update = NO;
+    self.flagAppear = NO;
+    self.flagDisappear = NO;
     self.testCell = [[MinesweeperCell alloc] init];
     XCTAssertNotNil(self.testCell);
 }
 
 - (void)tearDown
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.testCell = nil;
     [super tearDown];
+}
+
+- (void)updateReceived
+{
+    self.update = YES;
 }
 
 - (void)testDescriptionWhenCellIsMine
@@ -71,43 +79,104 @@
     XCTAssertFalse(self.testCell.isClicked);
 }
 
-- (void)testClickSetsClickedToYes
+- (void)testClick
 {
-    [self.testCell reset];
+    [self.testCell rightClick];
+    [self.testCell click];
+    XCTAssertTrue(self.testCell.isClicked);
+    XCTAssertEquals(self.testCell.state, MinesweeperCellStateDefault);
+}
+
+- (void)testRightClick
+{    
+    [self.testCell setState:MinesweeperCellStateDefault];
+    
+    [self.testCell rightClick];
+    XCTAssertEquals(self.testCell.state, MinesweeperCellStateFlag);
+    
+    [self.testCell rightClick];
+    XCTAssertEquals(self.testCell.state, MinesweeperCellStateQuestionMark);
+    
+    [self.testCell rightClick];
+    XCTAssertEquals(self.testCell.state, MinesweeperCellStateDefault);
+    
+    [self.testCell setState:5];
+    XCTAssertThrowsSpecificNamed([self.testCell rightClick], NSException, @"InvalidState");
+}
+
+- (void)testUpdateNotificationUponRightClicking
+{
+    XCTAssertFalse(self.update);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateReceived) name:MinesweeperCellDidUpdate object:self.testCell];
+
+    [self.testCell rightClick];
+    
+    XCTAssertTrue(self.update);
+
+    [self.testCell click];
+    self.update = NO;
+    
+    [self.testCell rightClick];
+    
+    XCTAssertFalse(self.update);
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)testUpdateNotificationUponClicking
+{
+    XCTAssertFalse(self.update);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateReceived) name:MinesweeperCellDidUpdate object:self.testCell];
+    
+    [self.testCell click];
+
+    XCTAssertTrue(self.update);
+    
+    self.update = NO;
     
     [self.testCell click];
     
-    XCTAssertTrue(self.testCell.isClicked);
-}
-
-- (void)testRightClickChangesStateFromDefaultToFlag
-{    
-    while (self.testCell.state != MinesweeperCellStateDefault) {
-        [self.testCell rightClick];
-    }
-    [self.testCell rightClick];
+    XCTAssertFalse(self.update);
     
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateFlag);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)testRightClickChangesStateFromFlagToQuestionMark
+- (void)flagAppearReceived
 {
-    while (self.testCell.state != MinesweeperCellStateFlag) {
-        [self.testCell rightClick];
-    }
-    [self.testCell rightClick];
-    
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateQuestionMark);
+    self.flagAppear = YES;
 }
 
-- (void)testRightClickChangesStateFromQuestionMarkToDefault
+- (void)flagDisappearReceived
 {
-    while (self.testCell.state != MinesweeperCellStateQuestionMark) {
-        [self.testCell rightClick];
-    }
+    self.flagDisappear = YES;
+}
+
+- (void)testFlagAppearNotification
+{
+    XCTAssertFalse(self.flagAppear);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(flagAppearReceived) name:MinesweeperCellFlagDidAppear object:self.testCell];
+    
     [self.testCell rightClick];
     
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateDefault);
+    XCTAssertTrue(self.flagAppear);
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)testFlagDisappearNotification
+{
+    XCTAssertFalse(self.flagDisappear);
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(flagDisappearReceived) name:MinesweeperCellFlagDidDisappear object:self.testCell];
+    
+    [self.testCell rightClick];
+    [self.testCell rightClick];
+    
+    XCTAssertTrue(self.flagDisappear);
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

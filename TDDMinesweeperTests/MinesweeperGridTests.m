@@ -25,8 +25,8 @@
 - (void)setUp
 {
     [super setUp];
-    self.rows = arc4random() % maxRows;
-    self.columns = arc4random() % maxColumns;
+    self.rows = 1 + arc4random() % maxRows;
+    self.columns = 1 + arc4random() % maxColumns;
     self.testGrid = [[MinesweeperGrid alloc] initWithRows:self.rows columns:self.columns];
     XCTAssertNotNil(self.testGrid);
 }

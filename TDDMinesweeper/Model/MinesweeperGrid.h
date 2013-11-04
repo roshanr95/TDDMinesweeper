@@ -15,7 +15,9 @@
 @property(nonatomic, readonly) NSUInteger columns;
 @property(nonatomic, readonly, strong) NSMutableArray *cellGrid;
 
-- (id)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns; //Designated
+- (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns; //Designated
+
+//- (id)objectAtIndexedSubscript:(NSUInteger)idx;
 
 - (id)objectAtIndexedSubscript:(NSUInteger)idx;
 

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		534A6E4B17F2E36D00D0B837 /* MinesweeperCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 534A6E4A17F2E36D00D0B837 /* MinesweeperCellTests.m */; };
 		534A6E4F17F2E89F00D0B837 /* MinesweeperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 534A6E4D17F2E42300D0B837 /* MinesweeperCell.m */; };
 		534A6E5517F316D400D0B837 /* MinesweeperGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 534A6E5417F316D400D0B837 /* MinesweeperGrid.m */; };
 		535F6B9017F5A183000A6184 /* MinesweeperGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F6B8F17F5A183000A6184 /* MinesweeperGridTests.m */; };
@@ -23,6 +22,7 @@
 		538E17BA17F1AE8900C63700 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 538E17B817F1AE8900C63700 /* InfoPlist.strings */; };
 		53E56EA317F5E24600217035 /* MinesweeperGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E56EA217F5E24600217035 /* MinesweeperGameTests.m */; };
 		53E56EA917F5E31A00217035 /* MinesweeperGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E56EA817F5E2B400217035 /* MinesweeperGame.m */; };
+		53F13CCB14AFE1060089E4AD /* MinesweeperCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 534A6E4A17F2E36D00D0B837 /* MinesweeperCellTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,9 +293,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53F13CCB14AFE1060089E4AD /* MinesweeperCellTests.m in Sources */,
 				535F6B9017F5A183000A6184 /* MinesweeperGridTests.m in Sources */,
 				53E56EA317F5E24600217035 /* MinesweeperGameTests.m in Sources */,
-				534A6E4B17F2E36D00D0B837 /* MinesweeperCellTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
