@@ -21,6 +21,7 @@ typedef enum {
 @property(nonatomic, getter = isClicked, readonly)BOOL clicked;
 @property(nonatomic, readonly)NSUInteger row;
 @property(nonatomic, readonly)NSUInteger column;
+@property(nonatomic, getter = isRevealed)BOOL revealed;
 
 - (instancetype)initWithRow:(NSUInteger)row column:(NSUInteger)column;
 

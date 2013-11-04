@@ -176,6 +176,47 @@
     XCTAssertEquals(self.testGame.remainingFlags, flags);
 }
 
+- (void)testClickingFlagUpdatesRemainingFlag
+{
+    NSUInteger row = arc4random() % self.rows;
+    NSUInteger col = arc4random() % self.columns;
+    
+    MinesweeperCell *cell = self.testGame.grid[row][col];
+    XCTAssertEquals(cell.state, MinesweeperCellStateDefault);
+    
+    [self.testGame cellRightClickedAtRow:row column:col];
+    NSUInteger flags = self.testGame.remainingFlags;
+    
+    [self.testGame cellClickedAtRow:row column:col];
+    XCTAssertEquals(self.testGame.remainingFlags, flags-1);
+}
 
+- (void)testClickingOnMineRevealsMines
+{
+    NSUInteger row,col = 0;
+    BOOL b = YES;
+    
+    for (row=0; row<self.rows && b; row++)
+    {
+        for (col=0; col<self.columns && b; col++)
+        {
+            if ([self.testGame.grid[row][col] isMine])
+            {
+                b = NO;
+            }
+        }
+    }
+    
+    [self.testGame cellClickedAtRow:(row-1) column:(col-1)];
+    
+    for (int i=0; i<self.rows; i++) {
+        for (int j=0; j<self.columns; j++) {
+            MinesweeperCell *cell = self.testGame.grid[i][j];
+            if (cell.isMine) {
+                XCTAssertTrue(cell.revealed);
+            }
+        }
+    }
+}
 
 @end

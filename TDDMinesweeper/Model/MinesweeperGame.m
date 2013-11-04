@@ -96,6 +96,7 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
     
     if ([cell isMine]) {
         self.gameOver = YES;
+        [self revealMines];
     }
 }
 
@@ -110,6 +111,18 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
     if (_remainingFlags != remainingFlags) {
         _remainingFlags = remainingFlags;
         [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperGameRemainingFlagsDidChangeNotification object:self];
+    }
+}
+
+- (void)revealMines
+{
+    for (int i=0; i<self.rows; i++) {
+        for (int j=0; j<self.columns; j++) {
+            MinesweeperCell *cell = self.grid[i][j];
+            if (cell.isMine) {
+                cell.revealed = YES;
+            }
+        }
     }
 }
 

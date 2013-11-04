@@ -35,7 +35,7 @@
     self.update = NO;
     self.flagAppear = NO;
     self.flagDisappear = NO;
-    self.testCell = [[MinesweeperCell alloc] init];
+    self.testCell = [[MinesweeperCell alloc] initWithRow:self.row column:self.column];
     XCTAssertNotNil(self.testCell);
 }
 
@@ -49,6 +49,12 @@
 - (void)updateReceived
 {
     self.update = YES;
+}
+
+- (void)testInitializer
+{
+    XCTAssertEquals(self.row, self.testCell.row);
+    XCTAssertEquals(self.column, self.testCell.column);
 }
 
 - (void)testDescriptionWhenCellIsMine
