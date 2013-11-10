@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53485699182EEC2700E184B0 /* MinesweeperMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 53485698182EEC2700E184B0 /* MinesweeperMatrix.m */; };
+		5348569B182F05FC00E184B0 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5348569A182F05FC00E184B0 /* Property List.plist */; };
 		534A6E4F17F2E89F00D0B837 /* MinesweeperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 534A6E4D17F2E42300D0B837 /* MinesweeperCell.m */; };
 		534A6E5517F316D400D0B837 /* MinesweeperGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 534A6E5417F316D400D0B837 /* MinesweeperGrid.m */; };
 		535F6B9017F5A183000A6184 /* MinesweeperGridTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F6B8F17F5A183000A6184 /* MinesweeperGridTests.m */; };
@@ -20,6 +22,7 @@
 		538E17B117F1AE8900C63700 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E17B017F1AE8900C63700 /* XCTest.framework */; };
 		538E17B217F1AE8900C63700 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538E179117F1AE8900C63700 /* Cocoa.framework */; };
 		538E17BA17F1AE8900C63700 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 538E17B817F1AE8900C63700 /* InfoPlist.strings */; };
+		53E333A2182840F4003A3D4F /* MinesweeperButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E333A1182840E7003A3D4F /* MinesweeperButtonCell.m */; };
 		53E56EA317F5E24600217035 /* MinesweeperGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E56EA217F5E24600217035 /* MinesweeperGameTests.m */; };
 		53E56EA917F5E31A00217035 /* MinesweeperGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E56EA817F5E2B400217035 /* MinesweeperGame.m */; };
 		53F13CCB14AFE1060089E4AD /* MinesweeperCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 534A6E4A17F2E36D00D0B837 /* MinesweeperCellTests.m */; };
@@ -36,6 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		53485697182EEC2700E184B0 /* MinesweeperMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinesweeperMatrix.h; sourceTree = "<group>"; };
+		53485698182EEC2700E184B0 /* MinesweeperMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinesweeperMatrix.m; sourceTree = "<group>"; };
+		5348569A182F05FC00E184B0 /* Property List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
 		534A6E4A17F2E36D00D0B837 /* MinesweeperCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinesweeperCellTests.m; sourceTree = "<group>"; };
 		534A6E4C17F2E42300D0B837 /* MinesweeperCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MinesweeperCell.h; path = Model/MinesweeperCell.h; sourceTree = "<group>"; };
 		534A6E4D17F2E42300D0B837 /* MinesweeperCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MinesweeperCell.m; path = Model/MinesweeperCell.m; sourceTree = "<group>"; };
@@ -60,6 +66,8 @@
 		538E17B017F1AE8900C63700 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		538E17B717F1AE8900C63700 /* TDDMinesweeperTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TDDMinesweeperTests-Info.plist"; sourceTree = "<group>"; };
 		538E17B917F1AE8900C63700 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		53E333A0182840E7003A3D4F /* MinesweeperButtonCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MinesweeperButtonCell.h; sourceTree = "<group>"; };
+		53E333A1182840E7003A3D4F /* MinesweeperButtonCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MinesweeperButtonCell.m; sourceTree = "<group>"; };
 		53E56EA217F5E24600217035 /* MinesweeperGameTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinesweeperGameTests.m; sourceTree = "<group>"; };
 		53E56EA717F5E2B400217035 /* MinesweeperGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MinesweeperGame.h; path = Model/MinesweeperGame.h; sourceTree = "<group>"; };
 		53E56EA817F5E2B400217035 /* MinesweeperGame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MinesweeperGame.m; path = Model/MinesweeperGame.m; sourceTree = "<group>"; };
@@ -141,10 +149,15 @@
 		538E179717F1AE8900C63700 /* TDDMinesweeper */ = {
 			isa = PBXGroup;
 			children = (
+				53E333A0182840E7003A3D4F /* MinesweeperButtonCell.h */,
+				53E333A1182840E7003A3D4F /* MinesweeperButtonCell.m */,
 				534A6E4E17F2E42800D0B837 /* Model */,
 				538E17A317F1AE8900C63700 /* AppDelegate.h */,
 				538E17A417F1AE8900C63700 /* AppDelegate.m */,
+				5348569A182F05FC00E184B0 /* Property List.plist */,
 				538E17A617F1AE8900C63700 /* MainMenu.xib */,
+				53485697182EEC2700E184B0 /* MinesweeperMatrix.h */,
+				53485698182EEC2700E184B0 /* MinesweeperMatrix.m */,
 				538E17A917F1AE8900C63700 /* Images.xcassets */,
 				538E179817F1AE8900C63700 /* Supporting Files */,
 			);
@@ -262,6 +275,7 @@
 				538E179C17F1AE8900C63700 /* InfoPlist.strings in Resources */,
 				538E17AA17F1AE8900C63700 /* Images.xcassets in Resources */,
 				538E17A217F1AE8900C63700 /* Credits.rtf in Resources */,
+				5348569B182F05FC00E184B0 /* Property List.plist in Resources */,
 				538E17A817F1AE8900C63700 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +297,8 @@
 			files = (
 				534A6E4F17F2E89F00D0B837 /* MinesweeperCell.m in Sources */,
 				538E17A517F1AE8900C63700 /* AppDelegate.m in Sources */,
+				53E333A2182840F4003A3D4F /* MinesweeperButtonCell.m in Sources */,
+				53485699182EEC2700E184B0 /* MinesweeperMatrix.m in Sources */,
 				53E56EA917F5E31A00217035 /* MinesweeperGame.m in Sources */,
 				534A6E5517F316D400D0B837 /* MinesweeperGrid.m in Sources */,
 				538E179E17F1AE8900C63700 /* main.m in Sources */,

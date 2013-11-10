@@ -29,7 +29,7 @@
         for (int i=0; i<rows; i++) {
             self.cellGrid[i] = [[NSMutableArray alloc] initWithCapacity:columns];
             for (int j=0; j<columns; j++) {
-                self.cellGrid[i][j] = [[MinesweeperCell alloc] init];
+                self.cellGrid[i][j] = [[MinesweeperCell alloc] initWithRow:i column:j];
             }
         }
     }

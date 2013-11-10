@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MinesweeperGrid.h"
 
 @interface MinesweeperGame : NSObject
 @property(nonatomic, readonly)NSUInteger remainingFlags;
 @property(nonatomic, readonly)NSUInteger score;
 @property(nonatomic, readonly)NSUInteger mineCount;
 @property(nonatomic, readonly)BOOL gameOver;
+@property(nonatomic, strong, readonly)MinesweeperGrid *grid;
 
 - (instancetype)initWithMineCount:(NSUInteger)mineCount rows:(NSUInteger)rows columns:(NSUInteger)columns; //Designated
 
