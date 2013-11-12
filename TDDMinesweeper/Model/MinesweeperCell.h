@@ -16,11 +16,11 @@ typedef enum {
 
 @interface MinesweeperCell : NSObject
 @property(nonatomic, getter = isMine)BOOL mine;
-@property(nonatomic, readonly)NSUInteger value;
+@property(nonatomic)NSUInteger value;
 @property(nonatomic, readonly)MinesweeperCellState state;
 @property(nonatomic, getter = isClicked, readonly)BOOL clicked;
-@property(nonatomic, readonly)NSUInteger row;
-@property(nonatomic, readonly)NSUInteger column;
+@property(nonatomic, readonly)NSInteger row;
+@property(nonatomic, readonly)NSInteger column;
 @property(nonatomic, getter = isRevealed)BOOL revealed;
 
 - (instancetype)initWithRow:(NSUInteger)row column:(NSUInteger)column;

@@ -453,7 +453,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="32" height="32"/>
-                        <buttonCell key="prototype" type="square" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" borderStyle="border" allowsMixedState="YES" inset="2" id="gOj-2T-IDC" customClass="MinesweeperButtonCell">
+                        <buttonCell key="prototype" type="square" bezelStyle="shadowlessSquare" imagePosition="overlaps" alignment="center" borderStyle="border" allowsMixedState="YES" transparent="YES" inset="2" id="gOj-2T-IDC" customClass="MinesweeperButtonCell">
                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>

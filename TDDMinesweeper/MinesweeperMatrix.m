@@ -7,6 +7,7 @@
 //
 
 #import "MinesweeperMatrix.h"
+#import "MinesweeperButtonCell.h"
 
 @interface MinesweeperMatrix ()
 @property(nonatomic)BOOL leftClickPossible;
@@ -56,7 +57,7 @@
             [[self cellAtRow:self.lrow column:self.lcolumn] mouseExited:theEvent];
         }
     }
-//    NSLog(@"%@", [theEvent description]);
+    NSLog(@"%@", [theEvent description]);
 }
 
 - (void)mouseUp:(NSEvent *)theEvent

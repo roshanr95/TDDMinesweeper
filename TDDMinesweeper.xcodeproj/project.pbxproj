@@ -149,6 +149,8 @@
 		538E179717F1AE8900C63700 /* TDDMinesweeper */ = {
 			isa = PBXGroup;
 			children = (
+				53485697182EEC2700E184B0 /* MinesweeperMatrix.h */,
+				53485698182EEC2700E184B0 /* MinesweeperMatrix.m */,
 				53E333A0182840E7003A3D4F /* MinesweeperButtonCell.h */,
 				53E333A1182840E7003A3D4F /* MinesweeperButtonCell.m */,
 				534A6E4E17F2E42800D0B837 /* Model */,
@@ -156,8 +158,6 @@
 				538E17A417F1AE8900C63700 /* AppDelegate.m */,
 				5348569A182F05FC00E184B0 /* Property List.plist */,
 				538E17A617F1AE8900C63700 /* MainMenu.xib */,
-				53485697182EEC2700E184B0 /* MinesweeperMatrix.h */,
-				53485698182EEC2700E184B0 /* MinesweeperMatrix.m */,
 				538E17A917F1AE8900C63700 /* Images.xcassets */,
 				538E179817F1AE8900C63700 /* Supporting Files */,
 			);

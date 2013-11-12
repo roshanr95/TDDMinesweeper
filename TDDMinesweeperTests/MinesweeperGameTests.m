@@ -72,6 +72,18 @@
     NSUInteger mineCount = 0;
     for (int i=0; i<self.rows; i++) {
         for (int j=0; j<self.columns; j++) {
+            NSUInteger v=0;
+            MinesweeperCell *cell = self.testGame.grid[i][j];
+            for (int r = MAX(0, i-1); r<MIN(i+2, self.rows); r++) {
+                for (int c = MAX(0, j-1); c<MIN(j+2, self.columns); c++) {
+                    if(cell.column==c && r==cell.row) continue;
+                    if ([self.testGame.grid[r][c] isMine]) {
+                        v++;
+                    }
+                }
+            }
+            XCTAssertEquals(v, cell.value);
+
             if ([self.testGame.grid[i][j] isMine]) {
                 mineCount++;
             }

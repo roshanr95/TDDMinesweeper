@@ -42,7 +42,7 @@
     [self.matrix setAction:@selector(leftClick:)];
     self.matrix.rtarget = self;
     self.matrix.raction = @selector(rightClick:);
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver) name:MinesweeperGameGameDidEndNotification object:self.game];
 }
 
 - (void)dealloc
@@ -69,7 +69,85 @@
     MinesweeperCell *modelCell = aNotification.object;
     MinesweeperButtonCell *viewCell = [self.matrix cellAtRow:modelCell.row column:modelCell.column];
     
-    NSLog(@"%lu%lu", (unsigned long)modelCell.row, (unsigned long)modelCell.column);
+    if (modelCell.isClicked)
+    {
+        NSLog(@"MCC");
+        [viewCell setState:NSOnState];
+        if (modelCell.isMine)
+        {
+            viewCell.alternateTitle = @"💥";
+            viewCell.alternateImage = nil;
+        }
+        else
+        {
+            viewCell.alternateTitle = [NSString stringWithFormat:@"%lu", (unsigned long)modelCell.value];
+            viewCell.attributedAlternateTitle = [self attributedStringForValue:modelCell.value];
+            viewCell.alternateImage = nil;
+        }
+    }
+    else
+    {
+        if (modelCell.state == MinesweeperCellStateDefault)
+        {
+            viewCell.title = nil;
+            viewCell.image = nil;
+        }
+        else if (modelCell.state == MinesweeperCellStateFlag)
+        {
+            viewCell.title = @"🚩";
+            viewCell.image = nil;
+        }
+        else
+        {
+            viewCell.title = @"❓";
+            viewCell.image = nil;
+        }
+    }
+}
+
+- (NSColor *)colorForValue:(NSUInteger)value
+{
+    switch (value) {
+        case 0:
+            return [NSColor blackColor];
+        case 1:
+            return [NSColor blueColor];
+        case 2:
+            return [NSColor colorWithDeviceRed:0.0 green:0.5 blue:0 alpha:1];
+        case 3:
+            return [NSColor redColor];
+        case 4:
+            return [NSColor colorWithDeviceRed:0 green:0 blue:0.5 alpha:1];
+        case 5:
+            return [NSColor brownColor];
+        case 6:
+            return [NSColor cyanColor];
+        case 7:
+            return [NSColor blackColor];
+        case 8:
+            return [NSColor darkGrayColor];
+        default:
+            return nil;
+    }
+    
+    return nil;
+}
+
+- (NSAttributedString *)attributedStringForValue:(NSUInteger)value
+{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = kCTTextAlignmentCenter;
+    
+    NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", (unsigned long)value]
+                                                                 attributes:@{NSForegroundColorAttributeName: [self colorForValue:value],
+                                                                              NSParagraphStyleAttributeName: paragraphStyle}];
+    
+    return string;
+}
+
+- (void)gameOver
+{
+    
 }
 
 @end

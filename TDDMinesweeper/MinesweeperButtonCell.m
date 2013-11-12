@@ -9,6 +9,14 @@
 #import "MinesweeperButtonCell.h"
 #import "MinesweeperMatrix.h"
 
+#define SuppressPerformSelectorLeakWarning(Stuff) \
+do { \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+Stuff; \
+_Pragma("clang diagnostic pop") \
+} while (0)
+
 @implementation MinesweeperButtonCell
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
@@ -34,19 +42,19 @@
 {
     if (self.state == NSOffState)
     {
-        if (![self.title  isEqual:@""]) {
+        if (!([self.title  isEqual:@""]||[self.title isEqual:@"0"])) {
             [self drawTitle:self.attributedTitle withFrame:frame inView:controlView];
         }
     }
     else if (self.state == NSMixedState)
     {
-        if (![self.title  isEqual:@""]) {
+        if (!([self.title  isEqual:@""]||[self.title isEqual:@"0"])) {
             [self drawTitle:self.attributedTitle withFrame:frame inView:controlView];
         }
     }
     else if (self.state == NSOnState)
     {
-        if (![self.alternateTitle  isEqual:@""]) {
+        if (!([self.alternateTitle  isEqual:@""]||[self.alternateTitle isEqual:@"0"])) {
             [self drawTitle:self.attributedAlternateTitle withFrame:frame inView:controlView];
         }
     }
@@ -107,7 +115,7 @@
     {
         self.state = NSOnState;
         NSMatrix *control = (NSMatrix *)self.controlView;
-        [control.target performSelector:control.action withObject:self];
+        SuppressPerformSelectorLeakWarning([control.target performSelector:control.action withObject:self]);
     }
     else if (type == NSLeftMouseDragged)
     {
@@ -117,7 +125,7 @@
     {
         self.state = NSOffState;
         MinesweeperMatrix *control = (MinesweeperMatrix *)self.controlView;
-        [control.rtarget performSelector:control.raction withObject:self];
+        SuppressPerformSelectorLeakWarning([control.rtarget performSelector:control.raction withObject:self]);
     }
     else if (type == NSRightMouseDragged)
     {

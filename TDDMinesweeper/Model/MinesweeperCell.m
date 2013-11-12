@@ -11,9 +11,8 @@
 @interface MinesweeperCell ()
 @property(nonatomic)MinesweeperCellState state;
 @property(nonatomic, getter = isClicked)BOOL clicked;
-@property(nonatomic)NSUInteger value;
-@property(nonatomic)NSUInteger row;
-@property(nonatomic)NSUInteger column;
+@property(nonatomic)NSInteger row;
+@property(nonatomic)NSInteger column;
 @end
 
 NSString *const MinesweeperCellDidUpdate = @"MCUpdate";
@@ -93,7 +92,7 @@ NSString *const MinesweeperCellFlagDidDisappear = @"MCFlagDisappear";
 {
     if (_clicked != clicked) {
         _clicked = clicked;
-            [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellDidUpdate object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellDidUpdate object:self];
     }
 }
 

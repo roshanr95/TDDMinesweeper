@@ -12,8 +12,8 @@
 
 @interface MinesweeperCellTests : XCTestCase
 @property(nonatomic, strong) MinesweeperCell *testCell;
-@property(nonatomic)NSUInteger row;
-@property(nonatomic)NSUInteger column;
+@property(nonatomic)NSInteger row;
+@property(nonatomic)NSInteger column;
 
 @property(nonatomic)BOOL update;
 @property(nonatomic)BOOL flagAppear;

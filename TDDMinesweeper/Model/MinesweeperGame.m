@@ -46,14 +46,27 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
         self.columns = columns;
         
         for (int i=0; i<mineCount; i++) {
-            NSUInteger row = arc4random() % self.rows;
-            NSUInteger col = arc4random() % self.columns;
+            int row = arc4random() % self.rows;
+            int col = arc4random() % self.columns;
             
             MinesweeperCell *cell = self.grid[row][col];
             if (cell.isMine)
                 i--;
             else
+            {
                 [cell setMine:YES];
+                
+                MinesweeperCell *nearCell;
+                for (int r = MAX(0, row-1); r<MIN(row+2, self.rows); r++)
+                {
+                    for (int c = MAX(0, col-1); c<MIN(col+2, self.columns); c++)
+                    {
+                        if(c==cell.column && r==cell.row) continue;
+                        nearCell = self.grid[r][c];
+                        nearCell.value++;
+                    }
+                }
+            }
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(flagAppearReceived) name:MinesweeperCellFlagDidAppear object:nil];
@@ -94,9 +107,24 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
     MinesweeperCell *cell = self.grid[row][column];
     [cell click];
     
-    if ([cell isMine]) {
-        self.gameOver = YES;
+    if ([cell isMine])
+    {
         [self revealMines];
+        self.gameOver = YES;
+    }
+    
+    if (cell.value == 0 && !cell.isMine)
+    {
+        for (NSUInteger r = MAX(0, cell.row-1); r<MIN(cell.row+2, self.rows); r++)
+        {
+            for (NSUInteger c = MAX(0, cell.column-1); c<MIN(cell.column+2, self.columns); c++)
+            {
+                if(c==cell.column && r==cell.row) continue;
+                if([self.grid[r][c] isClicked]) continue;
+                NSLog(@"!");
+                [self cellClickedAtRow:r column:c];
+            }
+        }
     }
 }
 
