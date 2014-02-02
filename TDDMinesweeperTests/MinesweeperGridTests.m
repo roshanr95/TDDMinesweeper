@@ -39,12 +39,12 @@
 
 - (void)testInitializerFillsRows
 {
-    XCTAssertEquals(self.testGrid.rows, self.rows);
+    XCTAssertEqual(self.testGrid.rows, self.rows);
 }
 
 - (void)testInitializerFillsColumns
 {
-    XCTAssertEquals(self.testGrid.columns, self.columns);
+    XCTAssertEqual(self.testGrid.columns, self.columns);
 }
 
 - (void)testInitializerFillsGrid

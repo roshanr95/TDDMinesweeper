@@ -18,6 +18,8 @@
 NSString *const MinesweeperCellDidUpdate = @"MCUpdate";
 NSString *const MinesweeperCellFlagDidAppear = @"MCFlagAppear";
 NSString *const MinesweeperCellFlagDidDisappear = @"MCFlagDisappear";
+NSString *const MinesweeperCellClicked = @"MCCellClicked";
+
 @implementation MinesweeperCell
 
 - (instancetype)initWithRow:(NSUInteger)row column:(NSUInteger)column
@@ -93,6 +95,7 @@ NSString *const MinesweeperCellFlagDidDisappear = @"MCFlagDisappear";
     if (_clicked != clicked) {
         _clicked = clicked;
         [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellDidUpdate object:self];
+        if(!self.isMine) [[NSNotificationCenter defaultCenter] postNotificationName:MinesweeperCellClicked object:self];
     }
 }
 

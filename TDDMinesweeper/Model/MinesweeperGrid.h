@@ -17,8 +17,6 @@
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns; //Designated
 
-//- (id)objectAtIndexedSubscript:(NSUInteger)idx;
-
 - (id)objectAtIndexedSubscript:(NSUInteger)idx;
 
 @end

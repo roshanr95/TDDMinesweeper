@@ -9,5 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MinesweeperButtonCell : NSButtonCell
-
+- (void)reset;
 @end

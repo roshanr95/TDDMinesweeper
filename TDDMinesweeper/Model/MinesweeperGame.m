@@ -18,6 +18,8 @@
 @property(nonatomic)NSUInteger rows;
 @property(nonatomic)NSUInteger columns;
 @property(nonatomic)BOOL gameOver;
+@property(nonatomic)BOOL gameEnded;
+@property(nonatomic)NSUInteger cellsClicked;
 @end
 
 NSString *const MinesweeperGameRemainingFlagsDidChangeNotification = @"MGRemainingFlagsChange";
@@ -71,7 +73,10 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(flagAppearReceived) name:MinesweeperCellFlagDidAppear object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(flagDisappearReceived) name:MinesweeperCellFlagDidDisappear object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellClicked) name:MinesweeperCellClicked object:nil];
     }
+    
+    [self addObserver:self forKeyPath:@"cellsClicked" options:NSKeyValueObservingOptionNew context:NULL];
     
     return self;
 }
@@ -79,16 +84,23 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self forKeyPath:@"cellsClicked"];
+}
+         
+- (void)cellClicked
+{
+    self.cellsClicked++;
+    NSLog(@"%lu", (unsigned long)self.cellsClicked);
 }
 
 - (void)flagAppearReceived
 {
-    self.remainingFlags++;
+    self.remainingFlags--;
 }
 
 - (void)flagDisappearReceived
 {
-    self.remainingFlags--;
+    self.remainingFlags++;
 }
 
 - (void)setGameOver:(BOOL)gameOver
@@ -121,7 +133,6 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
             {
                 if(c==cell.column && r==cell.row) continue;
                 if([self.grid[r][c] isClicked]) continue;
-                NSLog(@"!");
                 [self cellClickedAtRow:r column:c];
             }
         }
@@ -131,6 +142,7 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
 - (void)cellRightClickedAtRow:(NSUInteger)row column:(NSUInteger)column
 {
     MinesweeperCell *cell = self.grid[row][column];
+    if(self.remainingFlags == 0 && cell.state == MinesweeperCellStateDefault) return;
     [cell rightClick];
 }
 
@@ -151,6 +163,17 @@ NSString *const MinesweeperGameGameDidEndNotification = @"MGGameOver";
                 cell.revealed = YES;
             }
         }
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath  isEqual: @"cellsClicked"] && object == self) {
+        if ([change[NSKeyValueChangeNewKey] integerValue] == self.rows*self.columns - self.mineCount) {
+            self.gameEnded = YES;
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 

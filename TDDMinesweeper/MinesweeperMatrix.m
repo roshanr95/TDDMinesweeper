@@ -20,6 +20,7 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    if(!self.isEnabled) return;
     NSPoint locationInWindow = theEvent.locationInWindow;
     NSPoint locationInMatrix = [self convertPoint:locationInWindow fromView:self.window.contentView];
     
@@ -80,6 +81,7 @@
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
+    if(!self.isEnabled) return;
     if (!self.leftClickPossible)
     {
         NSPoint locationInWindow = theEvent.locationInWindow;
@@ -138,6 +140,18 @@
         }
         self.rightClickPossible = NO;
     }
+}
+
+- (void)reset
+{
+    for (MinesweeperButtonCell *cell in [self cells]) {
+        [cell reset];
+        [self drawCell:cell];
+    }
+    [self setEnabled:YES];
+    self.leftClickPossible = NO;
+    self.rightClickPossible = NO;
+    self.lrow = self.lcolumn = self.rrow = self.rcolumn = -1;
 }
 
 @end

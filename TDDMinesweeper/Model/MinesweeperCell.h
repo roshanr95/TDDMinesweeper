@@ -34,3 +34,4 @@ typedef enum {
 FOUNDATION_EXPORT NSString *const MinesweeperCellDidUpdate;
 FOUNDATION_EXPORT NSString *const MinesweeperCellFlagDidAppear;
 FOUNDATION_EXPORT NSString *const MinesweeperCellFlagDidDisappear;
+FOUNDATION_EXPORT NSString *const MinesweeperCellClicked;

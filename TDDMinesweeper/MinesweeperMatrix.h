@@ -11,4 +11,6 @@
 @interface MinesweeperMatrix : NSMatrix
 @property(nonatomic, weak)id rtarget;
 @property(nonatomic)SEL raction;
+
+- (void)reset;
 @end

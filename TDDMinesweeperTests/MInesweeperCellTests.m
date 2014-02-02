@@ -53,8 +53,8 @@
 
 - (void)testInitializer
 {
-    XCTAssertEquals(self.row, self.testCell.row);
-    XCTAssertEquals(self.column, self.testCell.column);
+    XCTAssertEqual(self.row, self.testCell.row);
+    XCTAssertEqual(self.column, self.testCell.column);
 }
 
 - (void)testDescriptionWhenCellIsMine
@@ -80,8 +80,8 @@
     [self.testCell reset];
     
     XCTAssertFalse(self.testCell.isMine);
-    XCTAssertEquals(self.testCell.value, (NSUInteger)0);
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateDefault);
+    XCTAssertEqual(self.testCell.value, (NSUInteger)0);
+    XCTAssertEqual(self.testCell.state, MinesweeperCellStateDefault);
     XCTAssertFalse(self.testCell.isClicked);
 }
 
@@ -90,7 +90,7 @@
     [self.testCell rightClick];
     [self.testCell click];
     XCTAssertTrue(self.testCell.isClicked);
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateDefault);
+    XCTAssertEqual(self.testCell.state, MinesweeperCellStateDefault);
 }
 
 - (void)testRightClick
@@ -98,13 +98,13 @@
     [self.testCell setState:MinesweeperCellStateDefault];
     
     [self.testCell rightClick];
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateFlag);
+    XCTAssertEqual(self.testCell.state, MinesweeperCellStateFlag);
     
     [self.testCell rightClick];
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateQuestionMark);
+    XCTAssertEqual(self.testCell.state, MinesweeperCellStateQuestionMark);
     
     [self.testCell rightClick];
-    XCTAssertEquals(self.testCell.state, MinesweeperCellStateDefault);
+    XCTAssertEqual(self.testCell.state, MinesweeperCellStateDefault);
     
     [self.testCell setState:5];
     XCTAssertThrowsSpecificNamed([self.testCell rightClick], NSException, @"InvalidState");

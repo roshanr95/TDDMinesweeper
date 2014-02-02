@@ -141,4 +141,15 @@ _Pragma("clang diagnostic pop") \
     }
 }
 
+- (void)reset
+{
+    [super setState:NSOffState];
+    [self setEnabled:YES];
+    self.title = nil;
+    self.alternateTitle = nil;
+    self.attributedAlternateTitle = nil;
+    self.image = nil;
+    self.alternateImage = nil;
+}
+
 @end

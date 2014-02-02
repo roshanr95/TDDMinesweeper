@@ -62,11 +62,11 @@
 
 - (void)testInitializer
 {
-    XCTAssertEquals(self.mineCount, self.testGame.mineCount);
-    XCTAssertEquals(self.mineCount, self.testGame.remainingFlags);
-    XCTAssertEquals(self.rows, self.testGame.rows);
-    XCTAssertEquals(self.columns, self.testGame.columns);
-    XCTAssertEquals(NO, self.testGame.gameOver);
+    XCTAssertEqual(self.mineCount, self.testGame.mineCount);
+    XCTAssertEqual(self.mineCount, self.testGame.remainingFlags);
+    XCTAssertEqual(self.rows, self.testGame.rows);
+    XCTAssertEqual(self.columns, self.testGame.columns);
+    XCTAssertEqual(NO, self.testGame.gameOver);
 
     XCTAssertNotNil(self.testGame.grid);
     NSUInteger mineCount = 0;
@@ -82,14 +82,14 @@
                     }
                 }
             }
-            XCTAssertEquals(v, cell.value);
+            XCTAssertEqual(v, cell.value);
 
             if ([self.testGame.grid[i][j] isMine]) {
                 mineCount++;
             }
         }
     }
-    XCTAssertEquals(self.mineCount, mineCount);
+    XCTAssertEqual(self.mineCount, mineCount);
 }
 
 - (void)testClickingCellMarksCellAsClicked
@@ -100,7 +100,7 @@
     [self.testGame cellClickedAtRow:row column:col];
     
     MinesweeperCell *cell = self.testGame.grid[row][col];
-    XCTAssertEquals(cell.isClicked, YES);
+    XCTAssertEqual(cell.isClicked, YES);
 }
 
 - (void)testClickingMineSetsGameOver
@@ -151,16 +151,16 @@
     NSUInteger col = arc4random() % self.columns;
     
     MinesweeperCell *cell = self.testGame.grid[row][col];
-    XCTAssertEquals(cell.state, MinesweeperCellStateDefault);
+    XCTAssertEqual(cell.state, MinesweeperCellStateDefault);
     
     [self.testGame cellRightClickedAtRow:row column:col];    
-    XCTAssertEquals(cell.state, MinesweeperCellStateFlag);
+    XCTAssertEqual(cell.state, MinesweeperCellStateFlag);
     
     [self.testGame cellRightClickedAtRow:row column:col];
-    XCTAssertEquals(cell.state, MinesweeperCellStateQuestionMark);
+    XCTAssertEqual(cell.state, MinesweeperCellStateQuestionMark);
 
     [self.testGame cellRightClickedAtRow:row column:col];
-    XCTAssertEquals(cell.state, MinesweeperCellStateDefault);
+    XCTAssertEqual(cell.state, MinesweeperCellStateDefault);
 }
 
 - (void)testChangingRemainingFlagsPostsNotification
@@ -179,13 +179,13 @@
     NSUInteger flags = self.testGame.remainingFlags;
     
     MinesweeperCell *cell = self.testGame.grid[row][col];
-    XCTAssertEquals(cell.state, MinesweeperCellStateDefault);
+    XCTAssertEqual(cell.state, MinesweeperCellStateDefault);
     
     [self.testGame cellRightClickedAtRow:row column:col];
-    XCTAssertEquals(self.testGame.remainingFlags, flags+1);
+    XCTAssertEqual(self.testGame.remainingFlags, flags-1);
     
     [self.testGame cellRightClickedAtRow:row column:col];
-    XCTAssertEquals(self.testGame.remainingFlags, flags);
+    XCTAssertEqual(self.testGame.remainingFlags, flags);
 }
 
 - (void)testClickingFlagUpdatesRemainingFlag
@@ -194,13 +194,13 @@
     NSUInteger col = arc4random() % self.columns;
     
     MinesweeperCell *cell = self.testGame.grid[row][col];
-    XCTAssertEquals(cell.state, MinesweeperCellStateDefault);
+    XCTAssertEqual(cell.state, MinesweeperCellStateDefault);
     
     [self.testGame cellRightClickedAtRow:row column:col];
     NSUInteger flags = self.testGame.remainingFlags;
     
     [self.testGame cellClickedAtRow:row column:col];
-    XCTAssertEquals(self.testGame.remainingFlags, flags-1);
+    XCTAssertEqual(self.testGame.remainingFlags, flags+1);
 }
 
 - (void)testClickingOnMineRevealsMines

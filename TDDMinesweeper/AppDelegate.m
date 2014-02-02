@@ -14,12 +14,21 @@
 
 @interface AppDelegate ()
 @property (weak) IBOutlet MinesweeperMatrix *matrix;
+@property (weak) IBOutlet NSButton *resetButton;
+@property (weak) IBOutlet NSTextField *flagLabel;
+@property (weak) IBOutlet NSUserDefaultsController *userDefaultsController;
+@property (weak) IBOutlet NSNumberFormatter *rowFormatter;
 
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic,strong)MinesweeperGame *game;
+@property(nonatomic)NSUInteger rows;
+@property(nonatomic)NSUInteger columns;
+@property(nonatomic)NSUInteger mineCount;
 @end
 
 @implementation AppDelegate
+
+#define HighScoresFilePath @"~/Documents/HighScores.txt"
 
 - (MinesweeperGame *)game
 {
@@ -28,6 +37,11 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    [self setUp];
+}
+
+- (void)setUp
 {
     for (int i=0; i<self.matrix.numberOfRows; i++) {
         for (int j=0; j<self.matrix.numberOfColumns; j++) {
@@ -43,11 +57,16 @@
     self.matrix.rtarget = self;
     self.matrix.raction = @selector(rightClick:);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameOver) name:MinesweeperGameGameDidEndNotification object:self.game];
+    
+    [self.game addObserver:self forKeyPath:@"remainingFlags" options:NSKeyValueObservingOptionNew context:NULL];
+    [self.game addObserver:self forKeyPath:@"gameEnded" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.game removeObserver:self forKeyPath:@"remainingFlags"];
+    [self.game removeObserver:self forKeyPath:@"gameEnded"];
 }
 
 - (IBAction)leftClick:(id)sender
@@ -71,7 +90,6 @@
     
     if (modelCell.isClicked)
     {
-        NSLog(@"MCC");
         [viewCell setState:NSOnState];
         if (modelCell.isMine)
         {
@@ -147,7 +165,62 @@
 
 - (void)gameOver
 {
-    
+    for (NSUInteger i = 0; i<self.matrix.numberOfRows; i++) {
+        for (NSUInteger j = 0; j<self.matrix.numberOfColumns; j++) {
+            MinesweeperCell *modelCell = self.game.grid[i][j];
+            MinesweeperButtonCell *viewCell = [self.matrix cellAtRow:modelCell.row column:modelCell.column];
+            
+            if (!modelCell.isClicked) {
+                if (modelCell.isMine && modelCell.state != MinesweeperCellStateFlag) {
+                    viewCell.title = @"💥";
+                    viewCell.image = nil;
+                }
+            }
+        }
+    }
+
+    [self.matrix setEnabled:NO];
+}
+
+- (void)gameEnded
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"OK"];
+    alert.messageText = @"Congratulations!";
+    alert.informativeText = @"You have succesfully completed the game";
+    [alert runModal];
+    [self.matrix setEnabled:NO];
+}
+
+- (IBAction)reset:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.game removeObserver:self forKeyPath:@"remainingFlags"];
+    [self.game removeObserver:self forKeyPath:@"gameEnded"];
+    self.flagLabel.stringValue = @"";
+    self.game = nil;
+    [self.matrix reset];
+    [self.matrix setNeedsDisplay];
+    [self setUp];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self.game && [keyPath  isEqual: @"remainingFlags"])
+    {
+        self.flagLabel.objectValue = change[NSKeyValueChangeNewKey];
+    }
+    else if (object == self.game && [keyPath  isEqual: @"gameEnded"])
+    {
+        if ([change[NSKeyValueChangeNewKey] boolValue])
+        {
+            [self gameEnded];
+        }
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end
